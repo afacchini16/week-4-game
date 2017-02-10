@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Star Wars RPG Game</title>
+
+	<link rel="stylesheet" type = "text/css" href = "css/style.css">    <!-- Added link to the jQuery Library -->
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src = "javascript/game.js"></script>
+
+
+    <!-- Added a link to Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+</head>
+<body>
+<header> Star Wars RPG! <br></header>
+
+	<div class = "readyToAttack"> <!-- used to define location of available cards -->
+		<button><div class = "cards" id = "darthVader"><p class = "vaderName">Darth Vader</p><img src = "images/darth-vader.jpg"><p><span></span></p></div></button>
+		<button><div class = "cards" id = "orsonKrennic"><p class = "krennicName">Orson Krennic</p><img src = "images/orson-krennic.jpg"><p><span></span></p></div></button>
+		<button><div class = "cards" id = "bazeMalbus"><p class = "bazeName">Baze Malbus</p><img src = "images/baze1.jpeg"><p><span></span></p></div></button>
+		<button><div class = "cards" id = "chirrutImwe"><p class = "chirrutName">Chirrut Imwe</p><img src = "images/Chirrut-Imwe.jpeg"><p><span></span></p></div></button>
+	</div>
+		<div class = "gamePlayArea"><p>Your Character</p>
+			<div class = "chosenChar"></div> <!-- Placeholder for chosen character -->
+			<p> Enemies Available to Attack</p>
+				<div class = "enemiesToAttack"></div><!-- Red background with remaining 3 characters -->
+			<p>Fight Section</p>
+			<button class = "attackBtn"> Attack </button>
+			<p>Defender</p>
+				<div class = "currentEnemy"></div>
+					<div class = "attackText"></div>
+		</div>
+
+
+
+
+
+</body>
+
+</html>

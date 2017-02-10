@@ -1,0 +1,49 @@
+header{
+	background-color:orange;
+}
+body{
+	color:white;
+	width:700px;
+}
+.gameText{
+	background-color:rgb(180,100,50);
+
+}
+.gameText p{
+	color:white;
+}
+.winsLosses{
+	background-color:rgb(10,200,40);
+}
+.currentScore{
+	background-color:teal;
+	margin:10px 0 10px 0;
+	width:30%;
+	height:100px;
+}
+.currentScore span{
+	font-size:300%;
+}
+.scoreText{
+	background-color:teal;
+	width:30%;
+}
+.targetScore{
+	background-color: green;
+}
+.targetScore span{
+	font-size:300%;
+}
+.scoreText{
+	color:black;
+	clear:both;
+}
+.crystalWrap > img{
+	border:solid 2px black;
+	margin:0;
+	height:100px;
+	width:100px;
+	float:left;
+	margin:20px 10px 10px 10px;
+
+}

@@ -1,0 +1,49 @@
+header{
+	font-size:200%;
+}
+.gamePlayArea p{
+	font-size:140%;
+}
+body{
+	background-image: url("../images/wallpaper.jpg");
+	padding-left:10px;
+}
+.cards img{
+	height:150px;
+	width:200px;
+	float:left;
+	/*border:solid 2px green;*/
+	margin:2px;
+}
+.cards p{
+	margin:0 auto;
+}
+button{
+	border:solid 2px green;
+	position:relative;
+	background-color:white;
+
+}
+.cards > img{
+	/*text-align:center;
+	position:relative;
+	border:solid 2px green;*/
+}
+.cards p{
+	/*position:absolute;
+	text-align:center;*/
+}
+.onClick{
+	background-color:red;
+	color:blue;
+}
+.enemyCard{
+	background-color:black;
+	color:white;
+}
+.gamePlayArea{
+	clear:both;
+}
+.attackText{
+	font-size:140%;
+}
