@@ -1,14 +1,4 @@
 $(document).ready(function(){
-// initialize HP's for all characters
-var darthVaderHP = 150;
-var orsonKrennicHP = 180;
-var bazeMalbusHP = 120;
-var chirrutImweHP = 100;
-// initialize all attack values
-var darthAttack = 8;
-var orsonAttack = 25;
-var bazeAttack = 5;
-var chirrutAttack = 15;
 // creates empty array with the id names.  on click, "this" id will
 //be deleted from the array
 var nameIdArray = ["#darthVader", "#orsonKrennic", "#bazeMalbus", "#chirrutImwe"];
@@ -16,89 +6,146 @@ var remainingCardsId = [];
 var gameSequenceTracker = 0;
 var cardIdPicked = null;
 var enemyCardId = null;
+var attackButtonState = true;
+var enemyCounter = 1;
+var enemyLossCounter = 1;
 
-$("#darthVader span").text(darthVaderHP);
-$("#orsonKrennic span").text(orsonKrennicHP);
-$("#bazeMalbus span").text(bazeMalbusHP);
-$("#chirrutImwe span").text(chirrutImweHP);
+//Cards as objects that contain hp and attack info
+var characters = {
+ 	darthVader: {
+		attackDmg:8,
+		hitPoints:150,
+			},
+	orsonKrennic: {
+		attackDmg:25,
+		hitPoints:180,
+	},
+	bazeMalbus: {
+		attackDmg:5,
+		hitPoints:120,
+	},	
+    chirrutImwe: {
+		attackDmg:15,
+		hitPoints:100,
+	},
+
+}
+
+console.log(typeof(characters.darthVader));
+$("#restartBtn").show();
+$("#restartBtn").hide();
+
+function scoreUpdate(){
+$("#darthVader span").text(characters.darthVader.hitPoints);
+$("#orsonKrennic span").text(characters.orsonKrennic.hitPoints);
+$("#bazeMalbus span").text(characters.bazeMalbus.hitPoints);
+$("#chirrutImwe span").text(characters.chirrutImwe.hitPoints);
+}
+scoreUpdate();
 
 	$("button").on("click", function(){
 		if (gameSequenceTracker === 0){
-		
+		cardIdPicked = $(this).attr("id");
+		console.log("card chosen: " + cardIdPicked);
+		console.log("attackDmg: " + characters[cardIdPicked].attackDmg);
 		$(this).detach().appendTo(".chosenChar");
-		cardIdPicked = this.id;
-		console.log(cardIdPicked);
-		//console.log("tracker");
-		gameSeque1dsnceTracker = 1;
-		//console.log(gameSequenceTracker);
-
-		// function enableTxt(elem) {
-	 //    var id = $(elem).attr("id")
-	//This function will organize and style the cards depending upon
-	//which one the user initially clicks on
-	else if (gameSequenceTracker === 1){
-	$("button").on("click", "div", function(){
-		enemyCardId = this.id;
-		//console.log(cardIdPicked);
-		//deletes the id name of the card the player picked from nameIdArray
-		//this allows me to reference and style/compute on the remaining cards
 		nameIdArray.splice($.inArray("#" + this.id, nameIdArray), 1);
 		//Will iterate through the remaining card id's
 		for (i = 0; i<nameIdArray.length;i++){
 				var nameLoopArray = nameIdArray[i];
 				//Adds the onClick class to the parent element (button)
 				//which has red background
-				$(nameLoopArray).parent().addClass("onClick");
+				$(nameLoopArray).addClass("onClick");
 				//Moves the remaining cards to the enemiesToAttack empty div
 				//which moves the cards to the correct location
-				$(nameLoopArray).parent().detach().appendTo(".enemiesToAttack");
+				$(nameLoopArray).detach().appendTo(".enemiesToAttack");
 		}
-		//console.log(nameIdArray);
-		gameSequenceTracker = 2
-		})
-	}
-		else if (gameSequenceTracker === 2){
-			$("button").on("click", function(){
-				if(gameSequenceTracker === 2){
-				$(this).detach().appendTo(".currentEnemy");
-				$(this).parent().removeClass(".onClick");
-				$(this).addClass("enemyCard");
+		gameSequenceTracker = 1;
 
-				console.log(this);
-				console.log(nameIdArray);
-				console.log("class added")
-			}
-				gameSequenceTracker = 3;
-			})
 		}
-		else if (gameSequenceTracker === 3){
-			$("button").on("click",function(){
+	else if (gameSequenceTracker === 1){
+		enemyCardId = this.id;
+		console.log("Enemy: " + enemyCardId);
+			// Moves enemy card 
+			$(this).detach().appendTo(".currentEnemy" + enemyCounter);
+			$(this).parent().removeClass(".onClick");
+			$(this).addClass("enemyCard");
+			enemyCounter = enemyCounter + 1;
+			attackButtonState = true;
+
+		gameSequenceTracker = 2;
+		//enemyCardId = enemyPicker();
+	}
+		else if (gameSequenceTracker === 2 && attackButtonState == true){
 				console.log(this);
-				gameSequenceTracker = 4;
 				var className = ($(this).attr("class")).toString();
-				console.log("Classname: " + className);
-				console.log("cardIdPicked: "+ cardIdPicked);
 
 				if(className == "attackBtn"){
-					$(".attackText").text("Hits for: ");
-					console.log("classname = attackbtn");
-					gameSequenceTracker = 4;
+					attack();
+					counterAttack();
+					scoreUpdate();
+					scoreCheck();
+					// gameSequenceTracker = 2;
 				}
 				else{
 					alert("Wrong button");
-					gameSequenceTracker = 4;
+					gameSequenceTracker = 2;
 				}
-				gameSequenceTracker = 4;
-			})
+			// })
 		}
-		else if (gameSequenceTracker ===4 ){
+		else if (gameSequenceTracker === 3){
 			console.log("gameSequenceTracker: " + gameSequenceTracker);
 		}
 })
 
-//else{
+function enemyPicker(){
+	// Player selects enemy card
+		enemyCardId = this.id;
+		console.log("Enemy: " + enemyCardId);
+			// Moves enemy card 
+			$(this).detach().appendTo(".currentEnemy");
+			$(this).parent().removeClass(".onClick");
+			$(this).addClass("enemyCard");
 
-//}
+		gameSequenceTracker = 2;
+}
+function attack(){
+	$(".attack").text("");
+	$(".attack").text("You attacked for " + characters[cardIdPicked].attackDmg + " damage.");
+	characters[enemyCardId].hitPoints -= characters[cardIdPicked].attackDmg;
+	characters[cardIdPicked].attackDmg *= 2;
+}
+
+function counterAttack(){
+	$(".counterAttack").text(" " + enemyCardId + "hit for " + characters[enemyCardId].attackDmg + " damage.");
+	characters[cardIdPicked].hitPoints -= characters[enemyCardId].attackDmg;
+	characters[enemyCardId].attackDmg *= 2;
+}
+
+function scoreCheck(){
+	// Instructions if player defeats enemy
+	if(characters[enemyCardId].hitPoints < 0){
+		
+		$(".attack").text("");
+		$(".counterAttack").text("");
+		$(".attack").text("You have defeated " + enemyCardId);
+		$(".currentEnemy" + enemyLossCounter).hide();
+		enemyLossCounter = enemyLossCounter + 1;
+		gameSequenceTracker = 1;
+		attackButtonState = false;
+			if(enemyLossCounter === 4){
+				$(".attack").text("You WON!!");
+
+			}
+					}
+	// Instructions if player loses
+	if (characters[cardIdPicked].hitPoints < 0){
+		$(".attack").text("");
+		$(".counterAttack").text("");
+		$(".attack").text("You lose... GAME OVER!");
+		$("#restartBtn").show();
+	}
+}
 
 });
 
